@@ -7,12 +7,20 @@ function dice_initialize(container) {
     canvas.style.width = window.innerWidth - 1 + 'px';
     canvas.style.height = window.innerHeight - 1 + 'px';
     var label = $t.id('label');
+    var audio = document.getElementById("audio1");
     var set = $t.id('set');
     var selector_div = $t.id('selector_div');
     var info_div = $t.id('info_div');
     on_set_change();
 
+	
+
     $t.dice.use_true_random = false;
+
+	function playDice(){audio.play()};
+                 
+   console.log('audio ='+ audio.src);
+    
 
     function on_set_change(ev) { set.style.width = set.value.length + 3 + 'ex'; }
     $t.bind(set, 'keyup', on_set_change);
@@ -25,15 +33,16 @@ function dice_initialize(container) {
         ev.stopPropagation();
         set.value = '0';
         on_set_change();
+           
     });
 
-    var box = new $t.dice.dice_box(canvas, { w: 500, h: 300 });
+    var box = new $t.dice.dice_box(canvas, { w: 600, h: 700 });
     box.animate_selector = false;
 
     $t.bind(window, 'resize', function() {
         canvas.style.width = window.innerWidth - 1 + 'px';
         canvas.style.height = window.innerHeight - 1 + 'px';
-        box.reinit(canvas, { w: 500, h: 300 });
+        box.reinit(canvas, { w: 600, h: 700 });
     });
 
     function show_selector() {
@@ -49,10 +58,12 @@ function dice_initialize(container) {
         // then callback with array of your result, example:
         // callback([2, 2, 2, 2]); // for 4d6 where all dice values are 2.
         callback();
+        playDice();
     }
 
     function notation_getter() {
         return $t.dice.parse_notation(set.value);
+         
     }
 
     function after_roll(notation, result) {
@@ -62,6 +73,7 @@ function dice_initialize(container) {
                 (result.reduce(function(s, a) { return s + a; }) + notation.constant);
         label.innerHTML = res;
         info_div.style.display = 'inline-block';
+              
     }
 
     box.bind_mouse(container, notation_getter, before_roll, after_roll);
@@ -80,7 +92,7 @@ function dice_initialize(container) {
             notation.set.push(name);
             set.value = $t.dice.stringify_notation(notation);
             on_set_change();
-        }
+        }     
     });
 
     var params = $t.get_url_params();

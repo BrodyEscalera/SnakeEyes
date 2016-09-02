@@ -292,7 +292,7 @@
     }
 
     this.create_d6 = function() {
-        if (!this.d6_geometry) this.d6_geometry = this.create_d6_geometry(this.scale * 0.9);
+        if (!this.d6_geometry) this.d6_geometry = this.create_d6_geometry(this.scale * 3);
         if (!this.dice_material) this.dice_material = new THREE.MeshFaceMaterial(
                 this.create_dice_materials(this.standart_d20_dice_face_labels, this.scale / 2, 1.0));
         return new THREE.Mesh(this.d6_geometry, this.dice_material);
@@ -443,7 +443,7 @@
             this.h = this.ch;
         }
         this.aspect = Math.min(this.cw / this.w, this.ch / this.h);
-        that.scale = Math.sqrt(this.w * this.w + this.h * this.h) / 13;
+        that.scale = Math.sqrt(this.w * this.w + this.h * this.h) / 10;
 
         this.renderer.setSize(this.cw * 2, this.ch * 2);
 
